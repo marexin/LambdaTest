@@ -18,7 +18,7 @@ In order to deploy this code, you need to first create backend resources in your
 Part of the project is also simple Github Actions pipeline containing all necessary steps to test and deploy this solution. It is stored in .github/workflows directory. This pipeline requires credentials for AWS account into which solution should be deployed. You can update credentials in 'Configure AWS Credentials' step. Additionally you can commnent/uncomment various Terrafrom steps, based on whether you want to just see Terraform Plan, Apply (deploy) the solution or delete all resources.
 
 ## Manual Deployment
-If you want to deploy manually using command line use these steps:
+If you want to deploy manually using command line, clone repository to your computer and run these commands:
 ```
 cd infra
 terraform init -backend-config="backends/dev.backend.tfvars"
