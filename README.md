@@ -4,7 +4,7 @@ This repo contains terraform code for deploying a simple lambda function that wi
 
 ## Infrastructure
 The Terraform code is located in 'infra' directory and it contains comments for each resource to shortly describe why the resource is created.
-Environment variables for Terraform are located in infra/envs/dev.tfvars file. By adding additional tfvars files you can add new environments. 
+Environment variables for Terraform are located in infra/envs/dev.tfvars file. By adding additional tfvars files you can add new environments. Before deploying you should update variable 'aws_account_id' to your account number.
 
 The created Lambda function will be triggered when CSV file is uploaded into files directory of S3 bucket: lambda-layers-dev.
 When Lambda is triggered it will print message to CloudWatch logs that a file was uploaded to the S3 bucket.
@@ -16,8 +16,6 @@ In order to deploy this code, you need to first create backend resources in your
 
 ## Pipeline
 Part of the project is also simple Github Actions pipeline containing all necessary steps to test and deploy this solution. It is stored in .github/workflows directory. This pipeline requires credentials for AWS account into which solution should be deployed. You can update credentials in 'Configure AWS Credentials' step. Additionally you can commnent/uncomment various Terrafrom steps, based on whether you want to just see Terraform Plan, Apply (deploy) the solution or delete all resources.
-
-
 
 ## Manual Deployment
 If you want to deploy manually using command line use these steps:
