@@ -27,9 +27,7 @@ data "aws_iam_policy_document" "lambda" {
 
     actions = [
       "s3:Get*",
-      "s3:List*",
-      "s3:PutObject*",
-      "s3:PutObjectAcl*"
+      "s3:List*"
     ]
 
     resources = [
