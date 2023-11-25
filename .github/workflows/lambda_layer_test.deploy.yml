@@ -3,10 +3,11 @@ name: 'Lambda Layer Test Deployment'
 on: 
   push:
     branches: 
-      - 'lambda_layers_test'
+      - 'main'
     paths:
       - '.github/workflows/lambda_layer_test.deploy.yml'
-      - 'lambda_layers/**'
+      - 'infra/**'
+      - 'lambda/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -61,15 +62,15 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init -backend-config="backends/${{ matrix.env }}.backend.tfvars"
-      working-directory: lambda_layers/infra
+      working-directory: infra
       
     - name: Terraform Validate
       run: terraform validate
-      working-directory: lambda_layers/infra
+      working-directory: infra
       
     - name: Plan Terraform
       run: terraform plan -var-file=envs/${{ matrix.env }}.tfvars -lock=false
-      working-directory: lambda_layers/infra
+      working-directory: infra
 
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
