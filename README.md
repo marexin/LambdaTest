@@ -14,13 +14,18 @@ Part of the project is also simple Github Actions pipeline containing necessary 
 
 The Terraform code in infra directory contains comments for each resource to shortly describe why the resource is created.
 
+## Manual Deployment
 If you want to deploy manually using command line use these steps:
+```
 cd infra
 terraform init -backend-config="backends/dev.backend.tfvars"
 terraform plan -var-file=envs/dev.tfvars
 terraform apply -var-file=envs/dev.tfvars
+```
 
-If you want to delete deployed resources use destroy command:
+If you want to delete deployed resources use the destroy command:
+```
 terraform destroy -var-file=envs/dev.tfvars
+```
 
 
