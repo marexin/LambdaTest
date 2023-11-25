@@ -79,6 +79,6 @@ jobs:
     #  run: terraform apply -auto-approve -var-file=envs/${{ matrix.env }}.tfvars
     #  working-directory: lambda_layers/infra
 
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve -var-file=envs/${{ matrix.env }}.tfvars
-      working-directory: lambda_layers/infra
+    #- name: Terraform Destroy
+    #  run: terraform destroy -auto-approve -var-file=envs/${{ matrix.env }}.tfvars
+    #  working-directory: lambda_layers/infra
