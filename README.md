@@ -1,6 +1,6 @@
 # Lambda S3 Bucket Upload Test
 
-This repo contains terraform code for deploying simple lambda function and associated resources.
+This repo contains terraform code for deploying a simple lambda function that will be triggered after a file was uploaded to specified S3 bucket.
 
 ## Infrastructure
 The Terraform code is located in 'infra' directory and it contains comments for each resource to shortly describe why the resource is created.
