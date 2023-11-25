@@ -9,6 +9,8 @@ Environment variables for Terraform are located in infra/envs/dev.tfvars file. B
 The created Lambda function will be triggered when CSV file is uploaded into files directory of S3 bucket: lambda-layers-dev.
 When Lambda is triggered it will print message to CloudWatch logs that a file was uploaded to the S3 bucket.
 
+This project creates lambda layer by creating a zip file and uploading it to S3 bucket. The layer zip file can have a maximum unzipped size 250 MB. If it contains a lot of packages that have bigger size then it's better to create the layer using a Docker image (up to 10 GB)
+
 ## Backend resources
 In order to deploy this code, you need to first create backend resources in your account: S3 bucket 'lambda-layers-dev-tf-state' and DynamoDB table: 'lambda-layers-dev-tf-state-lock'. These resources are for storing and managing TF state file (in real project this would ideally be done automatically with dedicated remote-state module). Configuration for these resources is in backends directory: infra/backends/dev.backend.tfvars
 
