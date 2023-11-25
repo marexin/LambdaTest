@@ -1,6 +1,5 @@
 import boto3
 import pandas as pd
-import os
 import io
 
 def lambda_handler(event, context):
