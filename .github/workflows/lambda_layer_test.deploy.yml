@@ -1,0 +1,84 @@
+name: 'Lambda Layer Test Deployment'
+
+on: 
+  push:
+    branches: 
+      - 'lambda_layers_test'
+    paths:
+      - '.github/workflows/lambda_layer_test.deploy.yml'
+      - 'lambda_layers/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Environment [dev]"
+        required: true
+        default: "dev"
+
+permissions:
+  deployments: write
+  id-token: write
+  contents: read
+
+env:
+  ENV: ${{ github.event.inputs.env || 'dev' }}
+  AWS_REGION: eu-west-1
+
+jobs:
+  terraform:
+    name: 'Terraform Plan'
+    runs-on: ubuntu-latest
+    #environment: test
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - dev
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Install the latest version of Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        aws-region: eu-west-1
+        aws-access-key-id: ${{ secrets.AWS_INFRA_DEV_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_INFRA_DEV_SECRET_ACCESS_KEY }}
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init -backend-config="backends/${{ matrix.env }}.backend.tfvars"
+      working-directory: lambda_layers/infra
+      
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: lambda_layers/infra
+      
+    - name: Plan Terraform
+      run: terraform plan -var-file=envs/${{ matrix.env }}.tfvars -lock=false
+      working-directory: lambda_layers/infra
+
+    - name: Terraform Plan Status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
+
+    #- name: Terraform Apply
+    #  run: terraform apply -auto-approve -var-file=envs/${{ matrix.env }}.tfvars
+    #  working-directory: lambda_layers/infra
+
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve -var-file=envs/${{ matrix.env }}.tfvars
+      working-directory: lambda_layers/infra
