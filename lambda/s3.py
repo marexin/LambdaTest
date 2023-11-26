@@ -4,7 +4,7 @@ import io
 
 def lambda_handler(event, context):
     
-    # Will print the message to CloudWatch logs
+    # Print message to CloudWatch logs
     print('File was uploaded to S3 bucket')
 
     # Initialize the S3 client
