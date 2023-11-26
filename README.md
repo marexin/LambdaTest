@@ -14,7 +14,9 @@ When Lambda is triggered it will print a message to CloudWatch logs that a file 
 This project creates lambda layer by creating a zip file and uploading it to S3 bucket. The layer zip file can have a maximum unzipped size 250 MB. If it contains a lot of packages that have bigger size then it's better to create the layer using a Docker image (up to 10 GB). Python code for lambda, as well as configuration for required python packages are located in 'lambda' directory.
 
 ## Backend resources
-In order to deploy this code, you need to first create backend resources in your account: S3 bucket 'lambda-layers-dev-tf-state' and DynamoDB table: 'lambda-layers-dev-tf-state-lock'. These are needed for storing and managing TF state file (in real project this would ideally be done automatically with dedicated remote-state module). Configuration for these resources is in backends directory: **infra/backends/dev.backend.tfvars**
+In order to deploy this code, you need to first create backend resources in your account: S3 bucket 'lambda-layers-dev-tf-state' and DynamoDB table: 'lambda-layers-dev-tf-state-lock'. These are needed for storing and managing TF state file (in real project this would ideally be done automatically with dedicated remote-state module). 
+
+Configuration for these resources is in backends directory: **infra/backends/dev.backend.tfvars**
 
 ## Pipeline
 Part of the project is also a simple Github Actions pipeline containing all necessary steps to test and deploy this solution. It is stored in **.github/workflows** directory. This pipeline requires credentials for AWS account into which solution should be deployed. You can update credentials in 'Configure AWS Credentials' step. 
