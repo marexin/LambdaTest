@@ -29,9 +29,8 @@ resource "aws_iam_policy" "lambda" {
     Statement = [
       {
         Action = [
-          "s3:DeleteObject*",
-          "s3:PutObject*",
-          "s3:Abort*"
+          "s3:ListBucket",
+          "s3:GetObject"
         ]
         Effect = "Allow"
         Resource = [

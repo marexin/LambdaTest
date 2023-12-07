@@ -12,7 +12,7 @@ resource "aws_s3_bucket_versioning" "lambda" {
 }
 
 # s3 bucket policy to allow lambda to access s3 bucket
-resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+resource "aws_s3_bucket_policy" "allow_access_from_lambda" {
   bucket = aws_s3_bucket.lambda.id
   policy = data.aws_iam_policy_document.lambda.json
 }
@@ -27,9 +27,7 @@ data "aws_iam_policy_document" "lambda" {
 
     actions = [
       "s3:Get*",
-      "s3:List*",
-      "s3:PutObject*",
-      "s3:PutObjectAcl*"
+      "s3:List*"
     ]
 
     resources = [

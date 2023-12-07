@@ -14,6 +14,12 @@ resource "aws_lambda_function" "test" {
   handler          = "s3.lambda_handler"
   runtime          = "python3.9"
   layers           = [aws_lambda_layer_version.test.arn]
+
+  vpc_config {
+    # Every subnet should be able to reach resources (such as EFS mount target) in the same Availability Zone. 
+    subnet_ids         = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 # allow s3 bucket to invoke lambda function
