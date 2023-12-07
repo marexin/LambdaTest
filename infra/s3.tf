@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "lambda" {
 
 resource "aws_s3_bucket_versioning" "lambda" {
   bucket = aws_s3_bucket.lambda.id
-  
+
   versioning_configuration {
     status = "Enabled"
   }
@@ -33,8 +33,8 @@ data "aws_iam_policy_document" "lambda" {
     ]
 
     resources = [
-        aws_s3_bucket.lambda.arn,
-        "${aws_s3_bucket.lambda.arn}/*"
+      aws_s3_bucket.lambda.arn,
+      "${aws_s3_bucket.lambda.arn}/*"
     ]
   }
 }

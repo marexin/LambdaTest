@@ -1,6 +1,6 @@
 # archive_file is used to create a zip file for lambda function
-data "archive_file" "python_lambda_package" {  
-  type        = "zip"  
+data "archive_file" "python_lambda_package" {
+  type        = "zip"
   source_file = "${path.module}/../lambda/s3.py"
   output_path = "${var.project_name}-${var.environment}.zip"
 }

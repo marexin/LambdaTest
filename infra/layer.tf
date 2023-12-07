@@ -25,9 +25,9 @@ resource "null_resource" "lambda_layer" {
 
 # upload zip file to s3
 resource "aws_s3_object" "lambda_layer_zip" {
-  bucket     = aws_s3_bucket.lambda.id
-  key        = "lambda_layers/${local.layer_name}/${local.layer_zip_path}"
-  source     = local.layer_zip_path
+  bucket = aws_s3_bucket.lambda.id
+  key    = "lambda_layers/${local.layer_name}/${local.layer_zip_path}"
+  source = local.layer_zip_path
   #etag       = "${filemd5("${path.module}/${local.layer_zip_path}")}"
   depends_on = [null_resource.lambda_layer] # triggered only if the zip file is created
 }
